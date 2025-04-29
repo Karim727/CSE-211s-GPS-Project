@@ -4,7 +4,7 @@
 #include "../../HEADERS/MCAL/UART.h"
 #include "../../SERVICES/BIT.h"
 
-#define CB 0x2A								//HexaDecimal for (*)
+
 
 void UART0_Init(void){
 	SET_BIT(SYSCTL_RCGCUART_R,0); //Activate UART0
@@ -43,8 +43,6 @@ void UART6_Init(void){
 	GPIO_PORTD_AMSEL_R &= ~0x30;	//disable analog function on PD4, PD5
 }
 
-#define UART_FR_TXFF   0x20   //UART TX fifo
-#define UART_FR_RXFE  0x10    // FIFO empty flag
 
 //UART0 functions UART0_outChar & UART0_OutString
 void UART0_OutChar(char data){
@@ -61,6 +59,11 @@ void UART0_OutString(char *pt){
 
 //UART6 functions 
 
+char UART6_getChar() {
+		while((UART6_FR_R & UART_FR_RXFE) !=0);
+	return (char) UART6_DR_R;
+}
+
 
 void UART6_OutChar(char data){
 		while((UART6_FR_R & UART_FR_TXFF)!=0);
@@ -76,12 +79,6 @@ void UART6_OutString(char *pt){
 	}
 }
 /*
-
-char UART6_getChar() {
-		while((UART6_FR_R & UART_FR_RXFE) !=0);
-	return (char) UART6_DR_R;
-}
-
 
 void GetCommand_UART6(char *Command,int len ){ 
 		
