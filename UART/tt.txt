@@ -1,1 +1,3 @@
 Shihab Modification: added Bit_Utilities.h 
+
+Shihab Modification: modified UART.C to enable PORTD for UART6 on pin 5,4 and modified the function GetCommand to add null pointer at the end to terminate
