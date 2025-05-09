@@ -4,25 +4,21 @@
 #include "distance.h"
 #include "GPS.h"
 const double  EARTH_RADIUS = 6371000;
-//float current_longitude;
-//float current_latitude;
-//float longi_min,lati_min; // Longitude and Latitude Minutes
-//short int longi_deg, lati_deg; // Longitude and Latitude Degrees
 
 
-void coord_conversion(void)
+/*void coord_conversion(void)
 {
    current_longitude = longi_min/60 + longi_deg;
 	 current_longitude = lati_min/60 + lati_deg;
 
-}
+}*/
 
 float ToRad(float angle){
     float rad = (float)angle *PI/180;
     return rad;
 }
 
-float GPS_getDistance(float currentLong, float currentLat, float destLong, float destLat){
+extern float GPS_getDistance(float currentLong, float currentLat, float destLong, float destLat){
 
 float currentLongRad = ToRad(currentLong);
 float currentLatRad = ToRad(destLat);

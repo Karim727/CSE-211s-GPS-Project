@@ -6,7 +6,8 @@
 float ToDegree(float angle);
 float ToRad(float angle);
 float GPS_getDistance(float currentLong, float currentLat, float destLong, float destLat);
+
 //void current_coord(void);
-void coord_conversion(void);
+//long int coord_conversion(char* coord, int len);
 
 #endif 

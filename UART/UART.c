@@ -1,8 +1,9 @@
-#include "../../SERVICES/tm4c123gh6pm.h"
 #include <stdint.h>
 #include <string.h>
-#include "../../HEADERS/MCAL/UART.h"
-#include "../../SERVICES/BIT.h"
+
+#include "tm4c123gh6pm.h"
+#include "UART.h"
+#include "Bit_Utilities.h"
 
 
 
@@ -16,7 +17,7 @@ void UART0_Init(void){
 	UART0_IBRD_R = 0x68; //IBRD=int(160000000/(16*9600)) = 104;
 	UART0_FBRD_R = 0xB;	//FBRD = int(0.166*64 +0.5) = 11
 	UART0_LCRH_R = 0x0070;	// 8-bit word length, enable FIFO 001110000
-	UART0_CTL_R = 0x0201; //enable RXE , and UART 001100000001
+	UART0_CTL_R = 0x0301; //enable RXE , and UART 001100000001
 	
 	GPIO_PORTA_AFSEL_R |= 0x03; //enable alt function PA0, PA1
 	GPIO_PORTA_PCTL_R = ( GPIO_PORTA_PCTL_R & 0xFFFFFF00 ) + 0x00000011; //configure UART for PA0,PA1
@@ -25,74 +26,38 @@ void UART0_Init(void){
 
 }
 
-void UART6_Init(void){
-	SET_BIT(SYSCTL_RCGCUART_R,6); //Activate UART6 
-	SET_BIT(SYSCTL_RCGCGPIO_R,3); //Activate PortD
-	
-	while(GET_BIT(SYSCTL_PRGPIO_R,3)==0 );	
-		
-	UART6_CTL_R &= ~UART_CTL_UARTEN;	//Disable UART6
-	UART6_IBRD_R = 0x68; //IBRD=int(160000000/(16*9600)) = 104;
-	UART6_FBRD_R = 0xB;	//FBRD = int(0.166*64 +0.5) = 11
-	UART6_LCRH_R = 0x0070;	// 8-bit word length, enable FIFO 001110000
-	UART6_CTL_R = 0x0201; //enable RXE , and UART 001100000001
-	
-	GPIO_PORTD_AFSEL_R |= 0x30; //enable alt function PD4, PD5
-	GPIO_PORTD_PCTL_R = ( GPIO_PORTD_PCTL_R & ~0x00FF0000 ) + 0x00110000; //configure UART for PD5,PD4
-	GPIO_PORTD_DEN_R |= 0x30;	//enable digital I/O on PD4, PD5
-	GPIO_PORTD_AMSEL_R &= ~0x30;	//disable analog function on PD4, PD5
-}
+void UART4_Init(void){
+    SET_BIT(SYSCTL_RCGCUART_R,4); //Activate UART4
+    SET_BIT(SYSCTL_RCGCGPIO_R,2); //Activate PortC
 
+    while(GET_BIT(SYSCTL_PRGPIO_R,2)==0 );
 
-//UART0 functions UART0_outChar & UART0_OutString
-void UART0_OutChar(char data){
- 		while((UART0_FR_R & UART_FR_TXFF)!=0);
- 	UART0_DR_R=data;
-}
+    UART4_CTL_R &= ~(1 << 0);    //Disable UART4
+    UART4_IBRD_R = 0x68; //
+    UART4_FBRD_R = 0xB;    
+    UART4_LCRH_R = 0x0070;    // 8-bit word length, enable FIFO
+    UART4_CTL_R = (1 << 9) | (1 << 8) | (1 << 0); //enable RXE, TXE and UART
 
-void UART0_OutString(char *pt){
-	while(*pt){
- 		UART0_OutChar(*pt);
-		pt++;
- 	}
- }
-
-//UART6 functions 
-
-char UART6_getChar() {
-		while((UART6_FR_R & UART_FR_RXFE) !=0);
-	return (char) UART6_DR_R;
-}
-
-
-void UART6_OutChar(char data){
-		while((UART6_FR_R & UART_FR_TXFF)!=0);
-	UART6_DR_R=data;
+    GPIO_PORTC_AFSEL_R |= 0x30; //enable alt function PC4, PC5
+    GPIO_PORTC_PCTL_R = (GPIO_PORTC_PCTL_R & ~0x00FF0000) + 0x00110000; //configure UART for PC5(Tx),PC4(Rx)
+    GPIO_PORTC_DEN_R |= 0x30;    //enable digital I/O on PC4, PC5
+    GPIO_PORTC_AMSEL_R &= ~0x30;    //disable analog function on PC4, PC5
 }
 
 
 
-void UART6_OutString(char *pt){
-	while(*pt){
-		UART6_OutChar(*pt);
-		pt++;
-	}
-}
-/*
 
-void GetCommand_UART6(char *Command,int len ){ 
-		
-		char character_UART6;
-		int p;		
-		for(p=0 ; p< len-1; p++){
-			character_UART6 = UART6_getChar();
-			if(character_UART6!=CB)
-			{
-				Command[p]=character_UART6;
-			}
-			else if(character_UART6==CB)
-				break;		
-		}
-		Command[p] = '\0';
+
+// UART0 RX_data // Needed for Showing the Output on PC's terminal
+void UART0_Rx(char data) {
+    while((UART0_FR_R & 0x0020) != 0); // Wait if full
+    UART0_DR_R = data;
 }
-*/
+
+
+// UART4 TX_data
+char UART4_Tx(void) {
+    while((UART4_FR_R & 0x10) != 0);  // Wait if empty
+    return (char)(UART4_DR_R & 0xFF);
+}
+

@@ -130,6 +130,7 @@
 // Watchdog Timer registers (WATCHDOG0)
 //
 //*****************************************************************************
+
 #define WATCHDOG0_LOAD_R        (*((volatile unsigned long *)0x40000000))
 #define WATCHDOG0_VALUE_R       (*((volatile unsigned long *)0x40000004))
 #define WATCHDOG0_CTL_R         (*((volatile unsigned long *)0x40000008))
