@@ -21,7 +21,7 @@ float d[5]={0,0,0,0,0};
 float GATE2_LAT = 30.06471733333;
 float GATE2_LONG = 31.2775783333;
 //float LUBAN_LAT=30.06329183333;
-//float LUBAN_LONG=31.27896033333;   // 30.063431°N 31.279529°E
+//float LUBAN_LONG=31.27896033333;   // 30.063431Â°N 31.279529Â°E
 float LUBAN_LAT=30.063431;
 float LUBAN_LONG=31.2795;
 
@@ -125,7 +125,6 @@ switch(min_index){
 	LCD_print_location(" LUBAN",6,d[0]); break;
 	case 1:
 	LCD_print_location(" GATE2",6,d[1]); break;
-	
 	case 2:
 	LCD_print_location(" Hall C",7,d[2]); break;
 	case 3:
@@ -137,17 +136,13 @@ switch(min_index){
 
 }	
 
-  
-
-            // build: " place:128m\r\n"
-            snprintf(bt_msg, sizeof(bt_msg),
+              snprintf(bt_msg, sizeof(bt_msg),
                      "%s:%dm\r\n",
                      names[min_index],
                      (int)(d[min_index]));
             UART3_SendS(bt_msg);   // transmit via bluetooth
         	
 
-          for (volatile int delay = 0; delay < 2000000; delay++);  //i added some delay
 		
 		
 		
