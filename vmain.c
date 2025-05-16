@@ -11,48 +11,26 @@
 #include "distance.h"
 #include "Bit_Utilities.h"
 #include "bluetooth.h"
-//#define MAX_LENGTH 45
-  //char i=0;
-	//int min=10000;
-	//float d[6]={0,0,0,0,0,0};	
-	//char min_index=4;
+
 float d[5]={0,0,0,0,0};	
 
 float GATE2_LAT = 30.06471733333;
 float GATE2_LONG = 31.2775783333;
-//float LUBAN_LAT=30.06329183333;
-//float LUBAN_LONG=31.27896033333;   // 30.063431°N 31.279529°E
+
 float LUBAN_LAT=30.063431;
 float LUBAN_LONG=31.2795;
 
 float HALL_A_LAT=30.06438516667	;
 float HALL_A_LONG=31.28003716667;
+
 float HALL_C_LAT=30.06387833333;
 float HALL_C_LONG=31.28039583333;
+
 float LIBRARY_LAT=30.06509483333;
 float LIBRARY_LONG=31.27998783333;
+
 float CREDIT_LAT=30.06362016667;
 float CREDIT_LONG=31.278225;
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////GPS
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Distance
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////main
-
 
 //FROM GOOGLE MAPS
 //	Student's Hostpital					30.066120, 31.279812 //
@@ -99,17 +77,12 @@ int main()
 	
 	Gps_out_string(NMEA); //Store Output of Gps in NMEA
 	Gps_parsing(NMEA,&lati_float,&longi_float); // Get the Longitude and Latitude// They're now stored in main.
-	d[0] = (int)GPS_getDistance(longi_float, lati_float,LUBAN_LONG,LUBAN_LAT); //d1 should be 128
-	d[1] = (int)GPS_getDistance(longi_float, lati_float,GATE2_LONG,GATE2_LAT); //d1 should be 128
-	//d[2] = (int)GPS_getDistance(longi_float, lati_float,HALL_A_LONG,HALL_A_LAT); //d1 should be 128
-	d[2] = (int)GPS_getDistance(longi_float, lati_float,HALL_C_LONG,HALL_C_LAT); //d1 should be 128
-	d[3] = (int)GPS_getDistance(longi_float, lati_float,LIBRARY_LONG,LIBRARY_LAT); //d1 should be 128
-	d[4] = (int)GPS_getDistance(longi_float, lati_float,CREDIT_LONG,CREDIT_LAT); //d1 should be 128	
-//UART5_SendS("mosque");
+	d[0] = (int)GPS_getDistance(longi_float, lati_float,LUBAN_LONG,LUBAN_LAT);
+	d[1] = (int)GPS_getDistance(longi_float, lati_float,GATE2_LONG,GATE2_LAT);
+	d[2] = (int)GPS_getDistance(longi_float, lati_float,HALL_C_LONG,HALL_C_LAT); 
+	d[3] = (int)GPS_getDistance(longi_float, lati_float,LIBRARY_LONG,LIBRARY_LAT);
+	d[4] = (int)GPS_getDistance(longi_float, lati_float,CREDIT_LONG,CREDIT_LAT);	
 	
-	
-		
-
 	for(i=0;i<5; i++ )     //TO GET THE INDEX OF THE MINIMUM ELEMENT
 {
 	 if(d[i]<min){ 
@@ -135,22 +108,16 @@ switch(min_index){
 		break;
 
 }	
+for(i=0;i<5; i++ )    // send all distances to phone
+{
+	snprintf(bt_msg,,"%s:%dm\r\n",names[i],(int)(d[i]));
+        UART3_SendS(bt_msg);   // transmit via Bluetooth	
+	memset(bt_msg, '\0',  sizeof(bt_msg)); 
 
-              snprintf(bt_msg, sizeof(bt_msg),
-                     "%s:%dm\r\n",
-                     names[min_index],
-                     (int)(d[min_index]));
-            UART3_SendS(bt_msg);   // transmit via bluetooth
-        	
-
-		
-		
-		
-		
+}	
+              
 		
 }
 	
-
-
 
 }
