@@ -2,6 +2,7 @@
 #include "tm4c123gh6pm.h"
 #include "Bit_Utilities.h"
 #include <string.h>
+#include <Buzzer.h>
 #include "LCD.h"
 
 void LCD_delay(long delay){
@@ -89,7 +90,7 @@ LCD_data(word[n]);
 void LCD_print_location (char* uu,char size,float mini_distance) {
 char print_distance[7];
 int distance_length=snprintf(print_distance,7,"%0.4f",mini_distance);
-if ((mini_distance)>= 10) {LCD_word("nearest:",8); }
+if ((mini_distance)>= 10) {LCD_word("nearest:",8); callBuzzer(); }
 else {LCD_word("arrived:",8);}
 LCD_word(uu,size);
 LCD_instructions(0xc0);
