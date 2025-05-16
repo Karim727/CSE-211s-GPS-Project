@@ -1,6 +1,6 @@
 #include <math.h>
 #include "Bit_Utilities.h"
-#include "tm4c123gh6pm.h"
+
 #include "distance.h"
 #include "GPS.h"
 const double  EARTH_RADIUS = 6371000;

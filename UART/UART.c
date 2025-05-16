@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "tm4c123gh6pm.h"
+
 #include "UART.h"
 #include "Bit_Utilities.h"
 

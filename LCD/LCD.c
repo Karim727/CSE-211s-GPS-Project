@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "tm4c123gh6pm.h"
+//#include "tm4c123gh6pm.h"
 #include "Bit_Utilities.h"
 #include <string.h>
-#include <Buzzer.h>
+#include "Buzzer.h"
 #include "LCD.h"
 
 void LCD_delay(long delay){
