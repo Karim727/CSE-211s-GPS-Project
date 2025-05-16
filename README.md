@@ -6,9 +6,9 @@ Upon turning on the tiva, it calculates the distances of five locations to the c
 On reaching the nearest location with the distance less than 10 m, the LCD displays "Arrived at location:   " and the buzzer makes a sound for 1 second.
 All the distances are sent to the mobile phone through the Bluetooth module.
 ## Components and Software
-> TM4C123 Tiva C Launchpad
-> Neo-6m GPS module
-> Bluetooth module
-> Buzzer
-> LCD Screen
-> Keil uVision 4 IDE  
+>> TM4C123 Tiva C Launchpad
+>> Neo-6m GPS module
+>> Bluetooth module
+>> Buzzer
+>> LCD Screen
+>> Keil uVision 4 IDE  
