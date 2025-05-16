@@ -227,7 +227,7 @@ __Vectors_Size  EQU     __Vectors_End - __Vectors
 
 
 ; Reset Handler
-
+; Enables floating point operations
 Reset_Handler   PROC
 	            EXPORT  Reset_Handler             [WEAK]
 

@@ -6,7 +6,7 @@
 #include "distance.h"
 #include "UART.h"
 
-float longi_min,lati_min; // Longitude and Latitude Minutes
+double longi_min,lati_min; // Longitude and Latitude Minutes
 short int longi_deg, lati_deg; // Longitude and Latitude Degrees
 
 

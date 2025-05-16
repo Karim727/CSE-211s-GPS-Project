@@ -89,7 +89,7 @@ LCD_data(word[n]);
 void LCD_print_location (char* uu,char size,float mini_distance) {
 char print_distance[7];
 int distance_length=snprintf(print_distance,7,"%0.4f",mini_distance);
-if ((mini_distance)>= 5) {LCD_word("nearest:",8); }
+if ((mini_distance)>= 10) {LCD_word("nearest:",8); }
 else {LCD_word("arrived:",8);}
 LCD_word(uu,size);
 LCD_instructions(0xc0);
